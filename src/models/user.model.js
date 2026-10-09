@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const user = new mongoose.Schema({
     name: {
@@ -28,8 +29,20 @@ const user = new mongoose.Schema({
         default: 'user'
     }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false,
 })
+
+user.pre('save', async function() {
+    if(!this.isModified('password') || !this.password){
+         return;
+    }
+    this.password = await bcrypt.hash(this.password, 10);
+})
+
+user.methods.comparePassword = async function (userPassword){
+    return bcrypt.compare(userPassword, this.password)
+}
 
 const User = mongoose.model('User', user)
 

@@ -21,7 +21,7 @@ app.use('/users', userRoutes);
 
 app.listen(PORT, () => {
     connectDB();
-    console.log(`Server is listening on port ${PORT}`);
+    console.log(`Server is listening on ${PORT} : http://localhost:${PORT}`);
 });
 
 // server.on('error', (error) => {

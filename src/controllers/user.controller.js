@@ -1,47 +1,36 @@
 const userService = require('../services/user.service');
+const { handleSuccess, handleError, handleOk } = require("../helpers/response.helper");
 
 const createUser = async (req, res) => {
     try {
         const data = await userService.createUser(req.body)
-        return res.json(data)
+        return handleSuccess(res, data)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        return handleError(res, error)
     }
 }
 const updateUser = async (req, res) => {
     try {
         const data = await userService.updateUser(req.userId, req.body);
-        return res.status(200).json(data);
+        return handleOk(res, data)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        return handleError(res, error)
     }
 }
 const deleteUser = async (req, res) => {
     try {
         const data = await userService.deleteUser(req.userId)
-        return res.json(data)
+        return handleOk(res, data)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        return handleError(res, error)
     }
 }
 const loginUser = async (req, res) => {
     try {
         const data = await userService.loginUser(req.body);
-        return res.json(data)
+        return handleOk(res, data)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        return handleError(res, error)
     }
 }
 

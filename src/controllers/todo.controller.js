@@ -1,80 +1,106 @@
-const todoServices = require('../services/todo.services');
+const todoServices = require("../services/todo.services");
+const { handleSuccess, handleError, handleOk } = require("../helpers/response.helper");
 
-const z = require('zod');
-
-const getTodo = async(req, res) => {
+/**
+ * Gets every todo item for the authenticated user.
+ * @param {req} req Express request object with the authenticated user id.
+ * @param {res} res Express response object used to send the result.
+ * @returns {Promise<res>} Response with the user's todo list or an error response.
+ */
+const getTodo = async (req, res) => {
     try {
-        const data = todoServices.getTodo(req.userId);
-        console.log('==============', data);
-        return res.json(data);
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-}
+      const data = await todoServices.getTodo(req.userId);
+      return handleSuccess(res, data);
+  } catch (error) {
+      return handleError(res, error);
+  }
+};
 
-const createTodo = async(req, res) => {
+/**
+ * Creates a new todo item for the authenticated user.
+ * @param {req} req Express request object with the authenticated user id and todo payload.
+ * @param {res} res Express response object used to send the result.
+ * @returns {Promise<res>} Response with the created todo item or an error response.
+ */
+const createTodo = async (req, res) => {
     try {
-        const data = await todoServices.createTodo(req.userId, req.body)
-        return res.json(data)
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
-    }
-}
+      const data = await todoServices.createTodo(req.userId, req.body);
+      return handleSuccess(res, data);
+  } catch (error) {
+      return handleError(res, error);
+  }
+};
 
-const getTodoById = async(req, res) => {
+/**
+ * Gets one todo item for the authenticated user by id.
+ * @param {req} req Express request object with the user id and todo id in the route params.
+ * @param {res} res Express response object used to send the result.
+ * @returns {Promise<res>} Response with the matching todo item or an error response.
+ */
+const getTodoById = async (req, res) => {
     try {
         const data = await todoServices.getTodoById(req.userId, req.params.id);
-        return res.json(data);
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
-    }
-}
+      return handleSuccess(res, data);
+  } catch (error) {
+      return handleError(res, error);
+  }
+};
 
-const updateTodo = async(req, res) => {
+/**
+ * Updates a todo item for the authenticated user.
+ * @param {req} req Express request object with the user id, todo id, and updated fields.
+ * @param {res} res Express response object used to send the result.
+ * @returns {Promise<res>} Response with the updated todo item or an error response.
+ */
+const updateTodo = async (req, res) => {
     try {
-        const data = await todoServices.updateTodo(req.userId, req.params.id, req.body);
-        return res.json(data);
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
-    }
-}
+      const data = await todoServices.updateTodo(
+          req.userId,
+          req.params.id,
+          req.body,
+      );
+      return handleSuccess(res, data);
+  } catch (error) {
+      return handleError(res, error);
+  }
+};
 
-const deleteTodo = async(req, res) => {
+/**
+ * Deletes a todo item for the authenticated user.
+ * @param {req} req Express request object with the user id and todo id in the route params.
+ * @param {res} res Express response object used to send the result.
+ * @returns {Promise<res>} Response confirming the delete action or an error response.
+ */
+const deleteTodo = async (req, res) => {
     try {
         const todo = await todoServices.deleteTodo(req.userId, req.params.id);
-        return res.json(todo);
-    } catch (error) {
-       return res.status(500).json({
-            success: false,
-            message: error.message
-        }) 
-    }
-}
+      return handleOk(res, todo);
+  } catch (error) {
+      return handleError(res, error);
+  }
+};
 
-const getTodos = async(req, res) => {
+/**
+ * Gets todo items for the authenticated user using query filters.
+ *
+ * @param {req} req Express request object with the authenticated user id and query values.
+ * @param {res} res Express response object used to send the result.
+ * @returns {Promise<res>} Response with the filtered todo list or an error response.
+ */
+const getTodos = async (req, res) => {
     try {
-        const todos = await todoServices.getTodos(req.query);
-        return res.json(todos);
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
-    }
-}
+      const todos = await todoServices.getTodos(req.userId, req.query);
+      return handleSuccess(res, todos);
+  } catch (error) {
+      return handleError(res, error);
+  }
+};
 
-
-module.exports = { getTodo , createTodo, getTodoById, updateTodo, deleteTodo, getTodos}
+module.exports = {
+    getTodo,
+    createTodo,
+    getTodoById,
+    updateTodo,
+    deleteTodo,
+    getTodos,
+};

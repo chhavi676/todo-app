@@ -16,5 +16,3 @@ const verify = jwt.verify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzM0
     algorithms: ["HS256"],
     issuer: "chhavi"
 })
-console.log(token);
-console.log(verify);

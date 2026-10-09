@@ -1,6 +1,6 @@
 const Router = require("express").Router();
 const validate = require("../middlewares/validation.middleware"); //middleware
-const createTodoValidation = require("../validations/todo.validation"); //validation
+const todoValidation = require("../validations/todo.validation"); //validation
 const todoController = require("../controllers/todo.controller"); //controllers
 const authMiddleware = require("../middlewares/auth.middleware");
 
@@ -9,16 +9,37 @@ Router.get("/hello", authMiddleware, todoController.getTodo);
 Router.post(
   "/",
   authMiddleware,
-  validate(createTodoValidation),
+  validate(todoValidation.createTodo),
   todoController.createTodo,
 );
 
-Router.get("/:id", authMiddleware, todoController.getTodoById);
+Router.get(
+  "/:id",
+  authMiddleware,
+  validate(todoValidation.todoId, "params"),
+  todoController.getTodoById,
+);
 
-Router.patch("/:id", authMiddleware, todoController.updateTodo);
+Router.patch(
+  "/:id",
+  authMiddleware,
+  validate(todoValidation.todoId, "params"),
+  validate(todoValidation.updateTodo),
+  todoController.updateTodo,
+);
 
-Router.delete("/:id", authMiddleware, todoController.deleteTodo);
+Router.delete(
+  "/:id",
+  authMiddleware,
+  validate(todoValidation.todoId, "params"),
+  todoController.deleteTodo,
+);
 
-Router.get("/", authMiddleware, todoController.getTodos);
+Router.get(
+  "/",
+  authMiddleware,
+  validate(todoValidation.getTodos, "query"),
+  todoController.getTodos,
+);
 
 module.exports = Router;

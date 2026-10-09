@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 class AuthHelper {
   static genAcessToken(user) {
-    console.log(user)
     const payload = {
       userId: user._id.toString(),
       role: user.role,
