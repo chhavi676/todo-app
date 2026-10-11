@@ -1,0 +1,33 @@
+<%- include('partials/head') %>
+
+<main class="screen">
+    <div class="app-icon">✓</div>
+    <h1 class="large-title">Create Account</h1>
+    <p class="subtitle">Bas kuch details chahiye</p>
+
+    <form id="signupForm" class="card-form" novalidate>
+        <div class="input-group">
+            <label class="field">
+                <span>Name</span>
+                <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
+            </label>
+            <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </label>
+            <label class="field">
+                <span>Password</span>
+                <input type="password" name="password" placeholder="Min 8 characters" autocomplete="new-password" minlength="8" required>
+            </label>
+        </div>
+        <p class="hint">Password kam se kam 8 characters ka hona chahiye.</p>
+
+        <p id="message" class="message" role="alert"></p>
+
+        <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+
+    <p class="switch">Pehle se account hai? <a href="/login">Sign In</a></p>
+</main>
+
+<%- include('partials/foot') %>

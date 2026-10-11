@@ -1,0 +1,221 @@
+/* ===========================================================
+   iOS style theme
+   =========================================================== */
+
+/* 1. Colors ko variables me rakha – ek jagah badlo, sab jagah badlega */
+:root {
+    --bg: #f2f2f7;            /* iOS systemGroupedBackground */
+    --card: #ffffff;
+    --text: #000000;
+    --text-secondary: #8e8e93;
+    --separator: #c6c6c8;
+    --blue: #007aff;          /* iOS systemBlue */
+    --red: #ff3b30;
+    --green: #34c759;
+    --radius: 12px;
+}
+
+/* 2. Phone dark mode me ho to apne aap dark colors */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #000000;
+        --card: #1c1c1e;
+        --text: #ffffff;
+        --text-secondary: #8e8e93;
+        --separator: #38383a;
+        --blue: #0a84ff;
+        --red: #ff453a;
+        --green: #30d158;
+    }
+}
+
+/* 3. Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* -apple-system = iPhone/Mac pe San Francisco font, baaki pe fallback */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;  /* mobile pe tap karne pe blue flash nahi */
+}
+
+/* 4. Page container – beech me, max 420px chauda */
+.screen {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 64px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.45s cubic-bezier(0.32, 0.72, 0, 1);  /* iOS jaisa smooth curve */
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 5. App icon – iOS ka "squircle" */
+.app-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #5ac8fa, var(--blue));
+    color: #fff;
+    font-size: 36px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
+}
+
+/* 6. Headings – iOS "Large Title" */
+.large-title {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    text-align: center;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 15px;
+    text-align: center;
+    margin: 6px 0 32px;
+}
+
+/* 7. Input group – iOS Settings jaisa "inset grouped list" */
+.input-group {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;            /* andar ke items ke kone bhi round dikhen */
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 0 16px;
+    position: relative;
+}
+
+/* Rows ke beech patli line, jo left se 16px chhod ke shuru hoti hai (iOS style) */
+.field + .field::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 16px;
+    right: 0;
+    height: 0.5px;
+    background: var(--separator);
+}
+
+.field span {
+    width: 84px;
+    flex-shrink: 0;
+    font-size: 17px;
+}
+
+.field input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    font-size: 17px;
+    color: var(--text);
+    padding: 13px 0;
+}
+
+.field input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+.field.row {
+    justify-content: space-between;
+}
+
+.field.row strong {
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+/* 8. Chhote texts */
+.hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 8px 16px 0;
+}
+
+.message {
+    font-size: 14px;
+    text-align: center;
+    min-height: 20px;
+    margin: 16px 0 8px;
+}
+.message.error   { color: var(--red); }
+.message.success { color: var(--green); }
+
+/* 9. Button – iOS "filled" button */
+.btn-primary {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 14px;
+    background: var(--blue);
+    color: #fff;
+    font: inherit;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn-primary:active   { transform: scale(0.97); opacity: 0.8; }  /* dabane pe halka chhota */
+.btn-primary:disabled { opacity: 0.5; cursor: default; }
+.btn-primary.loading  { color: transparent; position: relative; }
+
+/* Loading spinner – button ke beech ghoomta circle */
+.btn-primary.loading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.btn-danger {
+    background: var(--card);
+    color: var(--red);
+    margin-top: 32px;
+}
+
+/* 10. Neeche ka link */
+.switch {
+    text-align: center;
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 24px;
+}
+
+.switch a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+}

@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+
+<main class="screen">
+    <div class="app-icon">✓</div>
+    <h1 class="large-title">Sign In</h1>
+    <p class="subtitle">Apne account me login karo</p>
+
+    <form id="loginForm" class="card-form" novalidate>
+        <div class="input-group">
+            <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </label>
+            <label class="field">
+                <span>Password</span>
+                <input type="password" name="password" placeholder="Required" autocomplete="current-password" required>
+            </label>
+        </div>
+
+        <p id="message" class="message" role="alert"></p>
+
+        <button type="submit" class="btn-primary">Sign In</button>
+    </form>
+
+    <p class="switch">Account nahi hai? <a href="/signup">Create Account</a></p>
+</main>
+
+<%- include('partials/foot') %>

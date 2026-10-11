@@ -43,7 +43,7 @@ const loginUser = async (body) => {
     if (!user || !user.password) {
         throw new Error("User doesn't Exists!");
     }
-    const isMatch = user.comparePassword(body.password)
+    const isMatch = await user.comparePassword(body.password)
     if (!isMatch) {
         throw new Error('Invalid credentails!');
     }
