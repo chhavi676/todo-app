@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Success",
+  "payload": {
+    "sub": "113646842801590695910",
+    "name": "Shraddha Pandey",
+    "given_name": "Shraddha",
+    "family_name": "Pandey",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocJG6TPJK9eI596AiMcDL0enAgMLIkLw8qLfw1fhB2QuUAbUQA=s96-c",
+    "email": "shraddha.official22@gmail.com",
+    "email_verified": true
+  }
+}

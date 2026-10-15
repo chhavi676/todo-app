@@ -20,4 +20,6 @@ router.delete(
     userController.deleteUser
 );
 
+router.delete('/logout', authMiddleware, userController.logoutUser)
+
 module.exports = router
